@@ -1,0 +1,167 @@
+
+.login , .register{
+    background-color: rgba(168, 43, 226, 0.875);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.login .login-circle{
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background-color: rgb(27, 137, 8);
+    position: absolute;
+    z-index: -1;
+    left: -120px;
+    bottom: -150px;
+}
+.login-container , .signup-container{
+    height: 80vh;
+    width:80vw;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.login-image {
+    background: url('../assets/image.png');
+    box-shadow: -6px 0 10px  rgba(184, 13, 182, 0.601);
+    height: 100%;
+    width:50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px 10px 10px 5px;
+    filter:opacity(0.8);
+    border: 2px solid purple;
+    
+}
+
+.login-form{
+    background-color: white;
+    height: 100%;
+    width: 50%;
+    border-radius: 10px 5px 5px 10px;
+    padding: 40px 30px;
+    box-sizing: border-box;
+}
+.login-form h1{
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.login-form .title-underline{
+    width: 40px;
+    display: inline-block;
+    background-color: rgb(168, 7, 168);
+    height: 4px;
+    border-radius: 5px;
+
+    transition: margin-left 0.5s ease-in-out;
+    position: relative;
+    bottom: 10px;
+}
+
+.login-form h1:hover ~ .title-underline{
+    margin-left:10px;
+    
+}
+.inputs-login {
+    margin-top:100px;
+    
+}
+
+/* Style des champs de saisie */
+.inputs-login input {
+    justify-content: end;
+    margin: 20px 0;
+    outline: none;
+    border: none;
+    padding: 10px 15px;
+    padding-left: 40px; /* Espace pour les icônes */
+    text-align: left;
+    color: rgb(61, 1, 61);
+    width: 80%;
+    border-bottom: 2px solid purple;
+    font-size: 1rem;
+    position: relative;
+}
+
+/* Style pour les icônes d'email et de mot de passe */
+.email, .password {
+    position: relative;
+    width: 100%;
+
+}
+
+/* Icône de l'email */
+.email-icon {
+    color: rgb(110, 2, 110);
+    font-size: 1.2rem;
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.login-form .hr{
+    height: 2px;
+    color: rgb(156, 3, 156);
+    position: relative;
+    bottom: 10px;
+    width: 80%;
+    margin-left: 8%;
+}
+.login-form .login-submit{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(168, 0, 168);
+    color: white;
+    margin-top: 70px;
+    font-size: 1.2rem;
+    margin-left: 13%;
+    margin-bottom: 10px;
+    padding:10px 0;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.login-submit:hover{
+    background-color:  rgb(212, 111, 212);;
+}
+
+.password{
+    position: relative;
+}
+  
+  .eye-icon {
+    position: absolute;
+    right:70px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: rgb(243, 202, 255);
+  }
+  input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+.error-message{
+    text-align: center;
+    color: red;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* Espacement au-dessus du spinner */
+  }
+  
