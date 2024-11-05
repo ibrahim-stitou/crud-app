@@ -26,10 +26,14 @@ class ActiviteController extends Controller
             'titre' => 'required|string|max:255', 
             'ville_id' => 'required|exists:villes,id', 
             'date_acivite' => 'required|date', 
+            'beneficier_id' => 'sometimes|exists:beneficiers,id', // Optional, for attaching
         ]);
 
         // Create a new activity
         $activite = Activite::create($request->all());
+        if ($request->has('beneficier_id')) {
+            $activite->beneficiers()->attach($request->beneficier_id);
+        }
 
         return response()->json($activite, 201); 
     }
@@ -64,8 +68,10 @@ class ActiviteController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Activite $activite)
-    {
+    {   
+        $activite->beneficiers()->detach();
         $activite->delete();
+
         return response()->json(null, 204); 
     }
 }

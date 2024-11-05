@@ -22,13 +22,19 @@ class BeneficierController extends Controller
             "prenom" => 'required|string|max:255',
             "email" => 'required|email|unique:beneficiers,email',
             "telephone" => 'required|string|max:12',
-            "ville_id" => 'required|exists:villes,id'
+            "ville_id" => 'required|exists:villes,id',
+            "activite_ids" => 'array|exists:activites,id' // Array of activity IDs to attach
         ]);
 
         $beneficier = Beneficier::create($request->all());
+
+        // Attach activities if provided
+        if ($request->has('activite_ids')) {
+            $beneficier->activites()->attach($request->activite_ids);
+        }
+
         return response()->json(['message' => 'Bénéficiaire ajouté avec succès', 'beneficier' => $beneficier], 200);
     }
-
     public function show($id)
     {
         $beneficier = Beneficier::find($id);
@@ -67,8 +73,9 @@ class BeneficierController extends Controller
         if (!$beneficier) {
             return response()->json(['error' => 'Bénéficiaire introuvable'], 404);
         }
-
+        $beneficier->activites()->detach();
         $beneficier->delete();
+
         return response()->json(['message' => 'Bénéficiaire supprimé avec succès'], 200);
     }
 }

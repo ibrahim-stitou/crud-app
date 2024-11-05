@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->foreignId('ville_id')->constrained()->onDelete('cascade');
-            $table->foreignId('beneficier_id')->constrained()->onDelete('cascade');
             $table->date('date_acivite');
             $table->timestamps();
         });

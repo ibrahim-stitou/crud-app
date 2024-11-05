@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
     }
 
-    // Si les identifiants ne correspondent pas, renvoyez une erreur
+   
     return response()->json(['error' => 'invalid_credentials'], 401);
 }
 
