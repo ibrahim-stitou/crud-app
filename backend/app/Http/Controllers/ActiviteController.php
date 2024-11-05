@@ -64,14 +64,12 @@ class ActiviteController extends Controller
         return response()->json($activite); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Activite $activite)
     {   
         $activite->beneficiers()->detach();
         $activite->delete();
-
+        
         return response()->json(null, 204); 
     }
 }
