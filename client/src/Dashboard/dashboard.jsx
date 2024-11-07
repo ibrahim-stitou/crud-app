@@ -23,6 +23,7 @@ function Dashboard() {
 
   return (
     <Layout>
+      <div  className='path-container'>
       <h1 className='dashboard-header'>
         Dashboard 
         {pathParts.length > 1 && (
@@ -31,7 +32,7 @@ function Dashboard() {
             <span className="current-path">{currentPath.charAt(0).toUpperCase() + currentPath.slice(1)}</span>
           </>
         )}
-      </h1> 
+      </h1> </div>
       <Outlet context={{ getTitle }} /> 
     </Layout>
   );

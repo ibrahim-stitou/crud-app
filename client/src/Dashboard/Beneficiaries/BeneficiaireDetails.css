@@ -1,0 +1,96 @@
+/* Flex container for the main section */
+.flex {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Beneficiary Info */
+.beneficiary-info {
+  flex: 1;
+  min-width: 300px; /* Ensures the section does not become too narrow */
+  padding: 1rem;
+}
+
+/* Activities Section */
+.activities {
+  flex: 1;
+  min-width: 300px; /* Ensures the section does not become too narrow */
+  padding: 1rem;
+}
+
+/* Table Styles */
+.activities table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.activities th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0; /* Gray 200 */
+}
+
+.activities tr:nth-child(even) {
+  background-color: #f9fafb; /* Gray 50 */
+}
+
+.activities tr:hover {
+  background-color: #e2e8f0; /* Gray 200 */
+}
+
+/* Flex container for the main section */
+.flex {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Beneficiary Info */
+.beneficiary-info {
+  flex: 1;
+  min-width: 100px; /* Ensures the section does not become too narrow */
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2); /* Green box-shadow */
+  border-left: 4px solid #48bb78; /* Green border for the left side */
+}
+
+/* Table Styles */
+.activities table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.activities th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0; /* Gray 200 */
+}
+
+.activities tr:nth-child(even) {
+  background-color: #e6f7e6; /* Light green for zebra stripe */
+}
+
+.activities tr:nth-child(odd) {
+  background-color: #ffffff; /* White for zebra stripe */
+}
+
+.activities tr:hover {
+  background-color: #e2e8f0; /* Gray 200 */
+}
+
+/* Icon Style */
+.activities td svg,
+.beneficiary-info svg {
+  color: #48bb78; /* Green color for icons */
+  margin-right: 8px;
+}
+.mt-4{
+margin-top: 20px;
+margin-top: 15px;
+}
+.retour-b{
+  background-color: rgba(163, 207, 163, 0.685);
+  margin-top: 20px;
+}

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Ville;
@@ -7,6 +6,7 @@ use Illuminate\Http\Request;
 
 class villeController extends Controller
 {
+    // Display a listing of the cities.
     public function index()
     {
         $villes = Ville::all();
@@ -22,18 +22,29 @@ class villeController extends Controller
             'nom_ville' => 'required|string|max:255',
         ]);
 
+        // Create the city
         $ville = Ville::create($request->only(['nom_ville']));
-        return response()->json($ville, 201); // Return the created city with a 201 status
+        
+        // Return the created city with a 201 status
+        return response()->json($ville, 201);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id)
     {
-        // Delete the city
+        // Find the city by ID, or return a 404 if not found
         $ville = Ville::find($id);
         if (!$ville) {
-            return response()->json(['error' => 'unfounded city'], 404);
+            return response()->json(['error' => 'City not found'], 404);
         }
+
+        // Delete the city
         $ville->delete();
-        return response()->json(['message' => 'city deleted successfully'], 301); 
+        
+        // Return a success message with a 200 status
+        return response()->json(['message' => 'City deleted successfully'], 200);
     }
 }
+

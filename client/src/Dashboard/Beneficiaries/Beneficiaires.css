@@ -1,0 +1,380 @@
+/* Conteneur principal */
+.container {
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #e5e7eb; /* Fond gris plus foncé */
+}
+
+tr:nth-child(even) {
+    background-color: #f3f4f6; /* Gris pour les lignes alternées */
+}
+
+/* Boutons */
+button {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4); /* Ajout d'un contour pour l'accessibilité */
+}
+
+.bg-blue-500 {
+    background-color: #3b82f6;
+}
+
+.bg-yellow-500 {
+    background-color: #f59e0b;
+}
+
+.bg-red-500 {
+    background-color: #ef4444;
+}
+
+.bg-green-500 {
+    background-color: #10b981;
+}
+
+.text-white {
+    color: white;
+}
+
+.border {
+    border: 1px solid #d1d5db;
+}
+
+/* Espacements et marges */
+.p-2 {
+    padding: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.mt-5 {
+    margin-top: 20px;
+}
+
+/* Effet bouton flottant */
+button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.form-group input, .form-group select {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.modal-cancel-button, .modal-confirm-button {
+    padding: 10px 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-cancel-button {
+    background-color: #6b7280;
+    color: #ffffff;
+    margin-right: 8px;
+}
+
+.modal-cancel-button:hover {
+    background-color: #4b5563;
+    transform: scale(1.05);
+}
+
+.modal-confirm-button {
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+
+.modal-confirm-button:hover {
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+
+/* Confirmation Popup */
+.confirmation-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #10b981;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 3s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+/* Popup de confirmation de suppression */
+.confirmation-popup.delete-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(239, 68, 68, 0.8); /* Fond semi-transparent rouge */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100; /* Assurez-vous que la popup est au-dessus du contenu */
+    animation: fadeInPopup 0.5s forwards, fadeOutPopup 0.5s 3s forwards;
+}
+
+/* Animation pour l'apparition du popup de suppression */
+@keyframes fadeInPopup {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Texte du popup */
+.confirmation-popup.delete-popup p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Boutons du popup */
+.confirmation-popup.delete-popup button {
+    background-color: #10b981; /* Vert pour confirmer */
+    padding: 12px 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.confirmation-popup.delete-popup button:hover {
+    background-color: #059669; /* Vert plus foncé */
+}
+
+/* Bouton d'annulation */
+.confirmation-popup.delete-popup .close-btn {
+    background-color: #d1d5db; /* Gris pour annuler */
+    color: #333;
+    margin-top: 15px;
+}
+
+.confirmation-popup.delete-popup .close-btn:hover {
+    background-color: #6b7280;
+}
+
+/* Effet sur les boutons */
+.confirmation-popup.delete-popup button,
+.confirmation-popup.delete-popup .close-btn {
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.confirmation-popup.delete-popup button:hover,
+.confirmation-popup.delete-popup .close-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Formulaire et input supplémentaires */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #4b5563;
+}
+
+.input-group input, .input-group select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+.no-data-message {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.no-data-image {
+    width: 300px; /* You can adjust the size as needed */
+    margin-bottom: 10px;
+}
+
+.no-data-message p {
+    font-size: 18px;
+    color: #919e7b;
+}
+
+
+/* Section de filtre */
+.filter-section {
+    @apply flex  gap-4 mb-4;
+  }
+  
+  /* Style pour la zone de recherche */
+  .search-input {
+    @apply p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500;
+    width: 100%;
+    max-width: 300px; /* Limite la largeur à 300px */
+  }
+  .search-input:focus{
+    border:1px solid #059669;
+  }
+  
+  /* Style pour la sélection de ville */
+  .city-select {
+    @apply p-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500;
+    width: 100%;
+    max-width: 300px; /* Limite la largeur à 300px */
+  }
+  
+  .city-select:focus{
+    border: 1px solid green
+  }
+  /* Section des boutons de tri */
+  .sort-buttons {
+    @apply flex gap-4 mt-2;
+  }
+  
+  /* Style pour les boutons radio de tri */
+  .sort-buttons label {
+    @apply flex items-center gap-2;
+  }
+  
+  .sort-buttons input[type="radio"] {
+    @apply border-gray-300 focus:ring-blue-500;
+  }
+
+  .sub-header-container{
+    display:flex;
+    justify-content: space-between;
+  }
+
+  .sortOrder{
+    accent-color: #08945a;
+  }
+.ml-2{
+    margin-left: 1.5rem;
+}
+option{
+    
+}
+  option:hover{
+    background-color: #08945a;
+  }
+  .mr-2{
+    margin-right: 10px;
+  }

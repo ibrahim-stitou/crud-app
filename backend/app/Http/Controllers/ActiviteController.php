@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Activite;
@@ -12,7 +11,7 @@ class ActiviteController extends Controller
      */
     public function index()
     {
-        $activites = Activite::all();
+        $activites = Activite::with("ville")->get();
         return response()->json($activites);
     }
 
@@ -23,14 +22,16 @@ class ActiviteController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'titre' => 'required|string|max:255', 
-            'ville_id' => 'required|exists:villes,id', 
-            'date_acivite' => 'required|date', 
-            'beneficier_id' => 'sometimes|exists:beneficiers,id', // Optional, for attaching
+            'titre' => 'required|string|max:255',
+            'ville_id' => 'required|exists:villes,id',
+            'date_activite' => 'required|date',
+            'beneficier_id' => 'nullable|exists:beneficiers,id', // Optional, for attaching
         ]);
 
         // Create a new activity
-        $activite = Activite::create($request->all());
+        $activite = Activite::create($request->only(['titre', 'ville_id', 'date_activite']));
+
+        // Attach beneficiary if provided
         if ($request->has('beneficier_id')) {
             $activite->beneficiers()->attach($request->beneficier_id);
         }
@@ -41,35 +42,62 @@ class ActiviteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Activite $activite)
+    public function show($id)
     {
+        // Find the activity by ID, including the related 'ville' and 'beneficiers'
+        $activite = Activite::with(['ville', 'beneficiers'])->where('id', $id)->first();
+        
+        if (!$activite) {
+            return response()->json(["error" => "Activité non trouvée"], 404);
+        }
+        
+        return response()->json($activite);
+    }   
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        // Find the activity by ID
+        $activite = Activite::find($id);
+
+        if (!$activite) {
+            return response()->json(["error" => "Activité non trouvée"], 404);
+        }
+
+        // Validate the incoming request
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'ville_id' => 'required|exists:villes,id',
+            'date_activite' => 'required|date',
+        ]);
+
+        // Update the activity
+        $activite->update($request->only(['titre', 'ville_id', 'date_activite'])); 
+
         return response()->json($activite); 
     }
 
     /**
-     * Update the specified resource in storage.
+     * Remove the specified resource from storage.
      */
-    public function update(Request $request, Activite $activite)
+    public function destroy($id)
     {
-        // Validate the incoming request
-        $request->validate([
-            'titre' => 'required|string|max:255',
-            'ville_id' => 'required|exists:villes,id', 
-            'date_acivite' => 'required|date', 
-        ]);
+        // Find the activity by ID
+        $activite = Activite::find($id);
 
-        // Update the activity
-        $activite->update($request->only('titre', 'ville_id', 'date_acivite')); 
+        if (!$activite) {
+            return response()->json(['error' => 'Activité non trouvée'], 404);
+        }
 
-        return response()->json($activite); 
-    }
+        // Detach beneficiaries if any
+        if ($activite->beneficiers()->exists()) {
+            $activite->beneficiers()->detach();
+        }
 
-
-    public function destroy(Activite $activite)
-    {   
-        $activite->beneficiers()->detach();
+        // Delete the activity
         $activite->delete();
-        
-        return response()->json(null, 204); 
+
+        return response()->json(['message' => 'Activité supprimée avec succès'], 200); // Use 200 for success response
     }
 }

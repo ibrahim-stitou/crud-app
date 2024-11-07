@@ -11,11 +11,10 @@ class Beneficier extends Model
     protected $fillable=['nom','prenom','email','telephone','ville_id'];
     
     public function activites(){
-        return $this->belongsToMany(Activite::class,'activite_beneficier');
+        return $this->belongsToMany(Activite::class,'activite_beneficier','beneficier_id','activite_id');
     }
 
     public function ville(){
         return $this->belongsTo(Ville::class);
     }
-
 }
