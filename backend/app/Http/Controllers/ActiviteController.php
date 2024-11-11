@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activite;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ActiviteController extends Controller
 {
@@ -11,7 +13,9 @@ class ActiviteController extends Controller
      */
     public function index()
     {
-        $activites = Activite::with("ville")->get();
+        $activites = Cache::remember("activites",60,function(){
+            return Activite::with("ville")->get();
+        });
         return response()->json($activites);
     }
 
@@ -28,14 +32,14 @@ class ActiviteController extends Controller
             'beneficier_id' => 'nullable|exists:beneficiers,id', // Optional, for attaching
         ]);
 
-        // Create a new activity
+
         $activite = Activite::create($request->only(['titre', 'ville_id', 'date_activite']));
 
         // Attach beneficiary if provided
         if ($request->has('beneficier_id')) {
             $activite->beneficiers()->attach($request->beneficier_id);
         }
-
+        Cache::forget("activites");
         return response()->json($activite, 201); 
     }
 
@@ -45,11 +49,14 @@ class ActiviteController extends Controller
     public function show($id)
     {
         // Find the activity by ID, including the related 'ville' and 'beneficiers'
-        $activite = Activite::with(['ville', 'beneficiers'])->where('id', $id)->first();
+        $activite = Cache::remember("activite_{$id}",60,function()use($id){
+           return  Activite::with(['ville', 'beneficiers'])->where('id', $id)->first();
+        });
         
         if (!$activite) {
             return response()->json(["error" => "Activité non trouvée"], 404);
         }
+
         
         return response()->json($activite);
     }   
@@ -64,8 +71,6 @@ class ActiviteController extends Controller
         if (!$activite) {
             return response()->json(["error" => "Activité non trouvée"], 404);
         }
-
-        // Validate the incoming request
         $request->validate([
             'titre' => 'required|string|max:255',
             'ville_id' => 'required|exists:villes,id',
@@ -74,7 +79,8 @@ class ActiviteController extends Controller
 
         // Update the activity
         $activite->update($request->only(['titre', 'ville_id', 'date_activite'])); 
-
+        Cache::forget("activites");
+        Cache::forget("activite_{$id}");
         return response()->json($activite); 
     }
 

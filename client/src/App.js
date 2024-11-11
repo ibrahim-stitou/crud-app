@@ -4,8 +4,8 @@ import Login from './Login/Login';
 import Dashboard from './Dashboard/dashboard';
 import Beneficiaires from './Dashboard/Beneficiaries/Beneficiaires';
 import Activites from './Dashboard/Activities/Activites';
-import BeneficiaireDetails from './Dashboard/Beneficiaries/BeneficiaireDetails'; // New component for details
-import ActiviteDetails from './Dashboard/Activities/ActiviteDetails'; // New component for details
+import BeneficiaireDetails from './Dashboard/Beneficiaries/BeneficiaireDetails'; 
+import ActiviteDetails from './Dashboard/Activities/ActiviteDetails'; 
 import ProtectedRoute from './Protected';
 import NotFounded from './NotFounded/NotFounded';
 

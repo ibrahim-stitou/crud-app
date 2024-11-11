@@ -147,13 +147,12 @@ const filteredBeneficiers = beneficiers
   );
 })
 .sort((a, b) => {
-  const field = 'nom'; // You can change this to other fields (e.g., 'prenom', 'email', etc.)
+  const field = 'nom'; 
   const isAsc = sortOrder === 'asc';
   if (a[field] < b[field]) return isAsc ? -1 : 1;
   if (a[field] > b[field]) return isAsc ? 1 : -1;
   return 0;
 });
-
 
   return (
     <div className="container mt-5">
@@ -190,7 +189,7 @@ const filteredBeneficiers = beneficiers
   </select>
 
   {/* Sorting Radio Buttons */}
-  <div className="sort-buttons">
+  <div className="sort-buttons">  
     <label>
       <input
         type="radio"
@@ -221,7 +220,7 @@ const filteredBeneficiers = beneficiers
             <h2 className="text-xl font-semibold mb-4">{selectedId ? 'Modifier' : 'Ajouter'} Bénéficiaire</h2>
             <form onSubmit={handleAddBeneficier}>
               <div className="form-group">
-                <label>Nom:</label>
+                <label>Nom:</label> 
                 <input
                   type="text"
                   value={nom}

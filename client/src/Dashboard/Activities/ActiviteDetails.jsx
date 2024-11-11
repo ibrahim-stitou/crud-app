@@ -42,7 +42,6 @@ function ActiviteDetails() {
       await Axios.post(`/beneficiaires`, {...newBeneficiaire,activite_id:activite.id,ville_id:activite.ville.id});
       setIsBeneficiaireModalOpen(false);
       setNewBeneficiaire({ nom: '', email: '', telephone: '' });
-      // Re-fetch beneficiaires after adding
       const response = await Axios.get(`/activites/${id}`);
       setBeneficiaires(response.data.beneficiers);
     } catch (error) {
