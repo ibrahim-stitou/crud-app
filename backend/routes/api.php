@@ -24,12 +24,13 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::apiResource('beneficiaires', BeneficierController::class);
     Route::apiResource('activites', ActiviteController::class);
     Route::apiResource('villes', VilleController::class); // Corrected the case for the controller name
-    
+
     // Route to get the activities for a specific beneficiary
     Route::get('beneficiaires/{id}/activites', [BeneficierController::class, 'getActivites']);
     Route::post('/logout', [AuthController::class, 'logout']);
     // exporting database
-    Route::get('/export-beneficiers',[BeneficierController::class,'exportBeneficiers']);
+
+    Route::get('/export-beneficiaries', [BeneficierController::class, 'export']);
 });
 
 // Login route for getting a JWT token

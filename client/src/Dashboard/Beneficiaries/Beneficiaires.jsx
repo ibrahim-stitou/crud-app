@@ -96,6 +96,25 @@ function Beneficiaires() {
     }
   };
 
+  const exporterExcel = async () => {
+    try {
+      const response = await Axios.get('/export-beneficiaries', {
+        responseType: 'blob',
+      });
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'beneficiaries.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Erreur lors de l’exportation des bénéficiaires', error);
+    }
+  };
+  
+
+
   const handleEditBeneficier = (beneficier) => {
     setNom(beneficier.nom);
     setPrenom(beneficier.prenom);
@@ -165,8 +184,10 @@ const filteredBeneficiers = beneficiers
         className="bg-green-500 text-white p-2 mb-4"
       ><IoPersonAdd style={{marginRight:"5px"}}/> Ajouter Bénéficiaire
       </button>
+      
 
       <div className="filter-section mb-4">
+      <button  onClick={exporterExcel}>Exporter</button>
   <input
     type="text"
     placeholder="Rechercher "

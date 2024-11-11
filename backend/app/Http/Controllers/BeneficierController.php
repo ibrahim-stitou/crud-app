@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Beneficier;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class BeneficierController extends Controller
 {
@@ -129,8 +130,23 @@ class BeneficierController extends Controller
 
         return response()->json($activites, 200);
     }
-
-    public function exportBeneficiers(){
-        return Excel::download(new ExportBeneficiers,'beneficiers.xlsx');
+    public function export()
+    {
+        $beneficiaries = Beneficier::all()->map(function ($beneficiary) {
+            return [
+                'ID' => $beneficiary->id,
+                'Nom' => $beneficiary->nom,
+                'Prenom' => $beneficiary->prenom,
+                'Email' => $beneficiary->email,
+                'Telephone' => $beneficiary->telephone,
+                'Ville ID' => $beneficiary->ville_id,
+            ];
+        });
+        $fileName = 'beneficiaries.xlsx';
+        $filePath = storage_path("app/temp_$fileName");
+        (new FastExcel($beneficiaries))->export($filePath);
+        return response()->download($filePath, $fileName)->deleteFileAfterSend(true);
     }
+
+    
 }
