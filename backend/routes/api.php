@@ -35,3 +35,8 @@ Route::middleware(['jwt.auth'])->group(function () {
 
 // Login route for getting a JWT token
 Route::post('/login', [AuthController::class, 'login']);
+
+
+// test pagination
+
+Route::get('pagination_test',[BeneficierController::class,'pagination_test']);

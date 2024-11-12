@@ -15,8 +15,8 @@ class BeneficierFactory extends Factory
             'nom' => $this->faker->firstName,
             'prenom' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
-            'telephone' => $this->faker->phoneNumber,
-            'ville_id' => $this->faker->randomElement([1,2,3,4]),
+           'telephone' => $this->faker->numerify('###########'),
+            'ville_id' => $this->faker->numberBetween(1, 20),
         ];
     }
 }

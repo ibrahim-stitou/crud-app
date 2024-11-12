@@ -7,6 +7,7 @@ import { CiTrash } from "react-icons/ci";
 import { GrInfo } from "react-icons/gr";
 import { IoMdAdd } from "react-icons/io";
 import { IoPersonAdd } from "react-icons/io5";
+import { FaFileExport } from "react-icons/fa6";
 
 function Beneficiaires() {
   const [beneficiers, setBeneficiers] = useState([]);
@@ -27,6 +28,9 @@ function Beneficiaires() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
   const [villeAdd,setVilleAdd]=useState()
+  const [currentPage,setCurrentPage]=useState(1);
+  const [totalPages,setTotalPages]=useState()
+
 
   const navigate=useNavigate()
   
@@ -37,13 +41,14 @@ function Beneficiaires() {
 
   const villeParId = (id) => {
     const ville = villes.find((item) => item.id === parseInt(id));
-    return ville ? ville.nom_ville : '';  // Affiche rien si la ville n'est pas trouvée
+    return ville ? ville.nom_ville : '';  
   };
   
   const fetchBeneficiers = async () => {
     try {
-      const response = await Axios.get('/beneficiaires');
-      setBeneficiers(response.data);
+      const response = await Axios.get(`/pagination_test?page=${currentPage}`);
+      setBeneficiers(response.data.data);
+      setTotalPages(response.data.last_page);
     } catch (error) {
       console.error('Erreur lors de la récupération des bénéficiaires', error);
     }
@@ -173,6 +178,18 @@ const filteredBeneficiers = beneficiers
   return 0;
 });
 
+const handlePageChange=(pageId)=>{
+  if(pageId<=0){
+    setCurrentPage(1);
+  }
+  else if(pageId>totalPages){
+    setCurrentPage(1)
+  }else{
+    setCurrentPage(pageId)
+  }
+  fetchBeneficiers()
+}
+
   return (
     <div className="container mt-5">
       <h1 className="text-2xl font-bold mb-4">Liste des Bénéficiaires</h1>
@@ -187,7 +204,7 @@ const filteredBeneficiers = beneficiers
       
 
       <div className="filter-section mb-4">
-      <button  onClick={exporterExcel}>Exporter</button>
+      <button  onClick={exporterExcel} style={{display:"flex"}} ><FaFileExport style={{marginRight:"5px"}}/>Exporter</button>
   <input
     type="text"
     placeholder="Rechercher "
@@ -377,8 +394,38 @@ const filteredBeneficiers = beneficiers
               </tr>
             ))}
           </tbody>
+           {/* Pagination controls */}
+     
         </table>
       )}
+      
+       <div className="flex justify-end mt-4" style={{ display: 'flex', alignItems: 'center' }}>
+  <button
+    onClick={() => handlePageChange(currentPage - 1)}
+    className="px-4 py-2 bg-gray-300 text-black rounded"
+    disabled={currentPage === 1}
+  >
+    {'<'} Prev
+  </button>
+  <span className="px-4 py-2">
+    Page <span style={{ margin: "0 3px", border: "1px solid green", padding: "2px 5px", borderRadius: "50%" }}>
+      {currentPage}
+    </span> 
+    of 
+    <span style={{ margin: "0 3px", border: "1px solid green", padding: "2px 5px", borderRadius: "50%" }}>
+      {totalPages}
+    </span> 
+  </span>
+  <button
+    onClick={() => handlePageChange(currentPage + 1)}
+    className="px-4 py-2 mx-2 bg-gray-300 text-black rounded"
+    disabled={currentPage === totalPages}
+  >
+    Next {'>'}
+  </button>
+</div>
+
+
     </div>
   );
 }

@@ -10,15 +10,16 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class BeneficierController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $page = $request->query('page', 1);
+    $cacheKey = 'beneficiers_page_' . $page;
+    $beneficiers = Cache::remember($cacheKey, 60, function () use ($page) {
+        return Beneficier::paginate(10);
+    });
 
-        $beneficiers = Cache::remember('beneficiers', 60, function () {
-            return Beneficier::get();
-        });
-
-        return response()->json($beneficiers, 200);
-    }
+    return response()->json($beneficiers, 200);
+}
 
 
     /**
@@ -106,14 +107,14 @@ class BeneficierController extends Controller
             return response()->json(['error' => 'Bénéficiaire introuvable'], 404);
         }
 
-        // Détacher les activités avant de supprimer le bénéficiaire
+        
         $beneficier->activites()->detach();
         $beneficier->delete();
-
-        // Effacer le cache des bénéficiaires et du bénéficiaire spécifique
         Cache::forget('beneficiers');
         Cache::forget("beneficier_{$id}");
-
+        $totalPages = ceil(Beneficier::count() / 10); 
+        for ($page = 1; $page <= $totalPages; $page++) {
+            Cache::forget('beneficiers_page_' . $page); }
         return response()->json(['message' => 'Bénéficiaire supprimé avec succès'], 200);
     }
 
@@ -148,5 +149,11 @@ class BeneficierController extends Controller
         return response()->download($filePath, $fileName)->deleteFileAfterSend(true);
     }
 
+    public function pagination_test()
+    {
+        $beneficiers = Beneficier::paginate(10);
+        return response()->json($beneficiers);
+    }
+    
     
 }

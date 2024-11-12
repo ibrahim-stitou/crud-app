@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activite;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Factories\BeneficierFactory;
+use App\Models\Beneficier; // Make sure to import the Beneficier model
+use App\Models\Ville;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,13 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Create an admin user with a specific email and password
         User::factory()->create([
             'name' => 'ibrahim stitou',
             'email' => 'stitou.brahim.stitou@gmail.com',
-            'password'=>bcrypt('stitou2002')
+            'password' => bcrypt('stitou2002')
         ]);
-        BeneficierFactory::factory()->create();
+
+        // Create 50 Beneficier records using the Beneficier factory
+        Ville::factory(20)->create();
+        Beneficier::factory(50)->create();
+        Activite::factory()->count(10)->withBeneficiers()->create();
     }
 }

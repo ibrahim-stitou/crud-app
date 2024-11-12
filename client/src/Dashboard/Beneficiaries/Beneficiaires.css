@@ -378,3 +378,6 @@ option{
   .mr-2{
     margin-right: 10px;
   }
+  .justify-end{
+    justify-content: end;
+  }
