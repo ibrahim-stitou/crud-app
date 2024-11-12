@@ -53,7 +53,7 @@ const navigate=useNavigate()
   const fetchBeneficiaires = async () => {
     try {
       const response = await Axios.get('/beneficiaires');
-      setBeneficiaires(response.data);
+      setBeneficiaires(response.data.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des bénéficiaires', error);
     }
@@ -102,7 +102,6 @@ const navigate=useNavigate()
     setTitre(activite.titre);
     setDateActivite(activite.date_activite);
     setVilleId(activite.ville_id);
-    // Vérifiez que l'ID des bénéficiaires est correct et existe dans le tableau
     setSelectedBeneficiaires(activite.beneficers ? activite.beneficers.map(b => b.id) : []);
     setSelectedId(activite.id);
     setIsModalOpen(true);

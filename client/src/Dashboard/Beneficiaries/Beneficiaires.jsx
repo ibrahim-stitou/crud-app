@@ -38,7 +38,7 @@ function Beneficiaires() {
     fetchBeneficiers();
     fetchVilles();
   }, []);
-
+  
   const villeParId = (id) => {
     const ville = villes.find((item) => item.id === parseInt(id));
     return ville ? ville.nom_ville : '';  
