@@ -17,14 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         // Create an admin user with a specific email and password
         User::factory()->create([
-            'name' => 'ibrahim stitou',
+            'name' => 'stitou',
             'email' => 'stitou.brahim.stitou@gmail.com',
-            'password' => bcrypt('stitou2002')
+            'password' => bcrypt('stitou2002'),
+            'prenom'=>"ibrahim"
         ]);
 
         // Create 50 Beneficier records using the Beneficier factory
         Ville::factory(20)->create();
         Beneficier::factory(50)->create();
         Activite::factory()->count(10)->withBeneficiers()->create();
+        User::factory(50)->create();
     }
 }

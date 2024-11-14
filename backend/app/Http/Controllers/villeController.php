@@ -24,7 +24,7 @@ class villeController extends Controller
 
         // Create the city
         $ville = Ville::create($request->only(['nom_ville']));
-        
+
         // Return the created city with a 201 status
         return response()->json($ville, 201);
     }
@@ -42,9 +42,10 @@ class villeController extends Controller
 
         // Delete the city
         $ville->delete();
-        
+
         // Return a success message with a 200 status
         return response()->json(['message' => 'City deleted successfully'], 200);
     }
+
 }
 

@@ -30,9 +30,16 @@ class BeneficierController extends Controller
         $request->validate([
             "nom" => 'required|string|max:255',
             "prenom" => 'required|string|max:255',
-            "email" => 'required|email|unique:beneficiers,email',
-            "telephone" => 'required|string|max:12',
-            "ville_id" => 'required|exists:villes,id',
+            "telephone" => 'string|max:12',
+            "ville_id" => 'exists:villes,id',
+            "date_naissance"=>"date",
+            "ecole_id"=>"exists:ecoles,id",
+            "adresse_id"=>"string|max:255",
+            "niveau_id"=>"string|exists:id",
+            "pere_membre"=>"boolean",
+            "mere"=>"boolean"
+
+
         ]);
 
         $beneficier = Beneficier::create($request->only(['nom', 'prenom', 'email', 'telephone', 'ville_id']));
@@ -42,7 +49,7 @@ class BeneficierController extends Controller
             $beneficier->activites()->attach($request->activite_id);
         }
 
-      
+
         Cache::forget('beneficiers');
 
         return response()->json([
@@ -89,7 +96,7 @@ class BeneficierController extends Controller
 
         $beneficier->update($request->only(['nom', 'prenom', 'telephone', 'ville_id']));
 
-      
+
         Cache::forget('beneficiers');
         Cache::forget("beneficier_{$id}");
 
@@ -107,12 +114,12 @@ class BeneficierController extends Controller
             return response()->json(['error' => 'Bénéficiaire introuvable'], 404);
         }
 
-        
+
         $beneficier->activites()->detach();
         $beneficier->delete();
         Cache::forget('beneficiers');
         Cache::forget("beneficier_{$id}");
-        $totalPages = ceil(Beneficier::count() / 10); 
+        $totalPages = ceil(Beneficier::count() / 10);
         for ($page = 1; $page <= $totalPages; $page++) {
             Cache::forget('beneficiers_page_' . $page); }
         return response()->json(['message' => 'Bénéficiaire supprimé avec succès'], 200);
@@ -154,6 +161,6 @@ class BeneficierController extends Controller
         $beneficiers = Beneficier::paginate(10);
         return response()->json($beneficiers);
     }
-    
-    
+
+
 }

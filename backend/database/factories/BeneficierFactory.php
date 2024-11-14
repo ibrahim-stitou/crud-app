@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Beneficier;
+use App\Models\Ville;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BeneficierFactory extends Factory
@@ -14,9 +15,8 @@ class BeneficierFactory extends Factory
         return [
             'nom' => $this->faker->firstName,
             'prenom' => $this->faker->lastName,
-            'email' => $this->faker->unique()->safeEmail,
            'telephone' => $this->faker->numerify('###########'),
-            'ville_id' => $this->faker->numberBetween(1, 20),
+            'ville_id' => Ville::factory(),
         ];
     }
 }

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Beneficier extends Model
 {
     use HasFactory;
-    protected $fillable=['nom','prenom','email','telephone','ville_id'];
-    
+    protected $fillable=['nom','prenom','telephone','ville_id','date_naissnace','adresse','niveau_id','ecole_id','pere_membre','mere_membre'];
+
     public function activites(){
         return $this->belongsToMany(Activite::class,'activite_beneficier','beneficier_id','activite_id');
     }
@@ -17,4 +17,10 @@ class Beneficier extends Model
     public function ville(){
         return $this->belongsTo(Ville::class);
     }
+
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'notable');
+    }
+
 }

@@ -16,4 +16,8 @@ class Ville extends Model
     public function activites(){
         return $this->hasMany(Activite::class);
     }
+
+    public function intervenants(){
+        return $this->hasMany(Intervenant::class);
+    }
 }
