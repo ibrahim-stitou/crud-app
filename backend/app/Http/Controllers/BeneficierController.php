@@ -38,8 +38,6 @@ class BeneficierController extends Controller
             "niveau_id"=>"string|exists:id",
             "pere_membre"=>"boolean",
             "mere"=>"boolean"
-
-
         ]);
 
         $beneficier = Beneficier::create($request->only(['nom', 'prenom', 'email', 'telephone', 'ville_id']));
